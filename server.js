@@ -21,8 +21,10 @@ app.get('/api/paintings', (req, res) => {
 
 // Get painting by ID
 app.get('/api/painting/:id', (req, res) => {
-  const painting = paintings.find(p => p.paintingID == req.params.id);
-  if (!painting) return res.status(404).json({ message: "Painting not found" });
+  const painting = paintings.filter(p => p.paintingID == req.params.id);
+  if (painting.length === 0) {
+    return res.status(404).json({ message: "Painting not found" });
+  }
   res.json(painting);
 });
 
@@ -140,3 +142,4 @@ app.get('/api/galleries/:country', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
